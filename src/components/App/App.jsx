@@ -19,7 +19,7 @@ import InfoPage from '../InfoPage/InfoPage';
 import LandingPage from '../LandingPage/LandingPage';
 import LoginPage from '../LoginPage/LoginPage';
 import RegisterPage from '../RegisterPage/RegisterPage';
-import PlanPage from '../PlanPage/PlanPage';
+import PlanPage from '../PlanForm/PlanForm';
 
 import './App.css';
 
