@@ -32,8 +32,15 @@ pool.query(sqlText,[req.user.id])
      })
   });
 
-router.put('/', (req, res) => {
+router.put('/:id', (req, res) => {
+    const idToUpdate = req.params.id
     const queryText = `UPDATE "plan" SET "isComplete" = true WHERE user_id = $1;`; 
+    pool.query(queryText, [idToUpdate])
+    .then(result => {
+        res.sendStatus(201);
+    }).catch(err => {
+        console.log("Error in PUT /plan.router", err);
+    })
 })
 
 module.exports = router;
