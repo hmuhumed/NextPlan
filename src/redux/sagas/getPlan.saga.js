@@ -10,8 +10,19 @@ function* getPlan() {
     }
 }
 
+function* createTask(action) {
+    try {
+        yield axios.post('/api/plan', action.payload)
+        yield put({ type: 'GET_PLAN' })
+
+    }
+    catch (error) {
+        console.log('Error in createTask saga', error);
+    }
+}
 function* getPlanSaga() {
     yield takeLatest('GET_PLAN', getPlan);
+    yield takeLatest('CREATE_TASK', createTask);
 }
 
 export default getPlanSaga;

@@ -17,7 +17,8 @@ function PlanForm() {
     setComments(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
     const newTask = {
       task: task,
       comments: comments,
@@ -25,6 +26,7 @@ function PlanForm() {
 
     //dispatches the new task to the saga
     dispatch({ type: "CREATE_TASK", payload: newTask });
+
 
     // sends the user back to the UserPage after creating the task
     history.push("/user");

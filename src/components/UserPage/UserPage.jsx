@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { Card, CardContent, Typography, Button} from "@mui/material";
+import { Card, CardContent, Typography, Button, Box} from "@mui/material";
 import { func } from "prop-types";
 
 function UserPage() {
@@ -26,13 +26,15 @@ function UserPage() {
 
   return (
     <>
-      <Typography variant="h4">Welcome, {user.username}!</Typography>
+   <Box>
+   <Typography variant="h4">Welcome, {user.username}!</Typography>
       <br />
       <Typography variant="h3" style={{ textAlign: "center" }}>
         Upcoming Tasks
       </Typography>
       <br />
-
+      </Box>
+      <Box display="flex" sx={{ m: 5 }} flexDirection="column" alignItems="center">
       <CardContent>
         {plan.map((task, i) => (
           <div key={i}>
@@ -47,6 +49,7 @@ function UserPage() {
         ))}
       </CardContent>
       <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={createPlan}>Create New Task</Button>
+   </Box>
     </>
   );
 }
