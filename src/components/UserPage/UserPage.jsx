@@ -1,29 +1,44 @@
-import React from 'react';
-import LogOutButton from '../LogOutButton/LogOutButton';
-import {useSelector} from 'react-redux';
-import {Card, CardContent, Typography} from '@mui/material';
+import React from "react";
+import LogOutButton from "../LogOutButton/LogOutButton";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { Card, CardContent, Typography, Button} from "@mui/material";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
+  const plan = useSelector((store) => store.getPlanReducer);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch({ type: "GET_PLAN" });
+  }, []);
+
   return (
     <>
-      <Typography variant='h2'>Welcome, {user.username}!</Typography>
+      <Typography variant="h4">Welcome, {user.username}!</Typography>
       <br />
-      <LogOutButton className="btn" />
-      
-      <Card className="container" style={{borderRadius: "px"}}  elevation={6}>
-      <Typography variant='h2' style={{textAlign: "center"}} >Upcoming Tasks</Typography>
-        <CardContent>
-          <Card style={{maxWidth: "50%", height: "200px"}} elevation={4}>
-            <CardContent>
-              <Typography>
-                Hi, my name is JavaScript and I am a task. I am due on 10/10/2021.
-              </Typography>
-            </CardContent>
-          </Card>
-        </CardContent>
-    </Card>
+      <Typography variant="h3" style={{ textAlign: "center" }}>
+        Upcoming Tasks
+      </Typography>
+      <br />
+
+      <CardContent>
+        {plan.map((task, i) => (
+          <div key={i}>
+            <Card elevation={4}>
+              <CardContent>
+                <Typography>{task.task}</Typography>
+                <Typography>{task.comments}</Typography>
+              </CardContent>
+            </Card>
+            <br />
+          </div>
+        ))}
+      </CardContent>
+      <Button style={{boxShadow: "-moz-initial"}} onClick={() => console.log("Button Clicked")}>Create New Task</Button>
     </>
   );
 }
