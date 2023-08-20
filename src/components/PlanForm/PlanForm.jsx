@@ -51,7 +51,9 @@ function PlanForm() {
           fullWidth
           multiline
         />
-        <Button type="submit">Create Task</Button>
+        <Box display="flex" justifyContent="flex-end">
+        <Button type="submit" alignItems="">Create Task</Button>
+        </Box>
       </form>
     </Box>
   );
