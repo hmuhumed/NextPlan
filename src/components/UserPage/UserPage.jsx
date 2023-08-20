@@ -5,16 +5,24 @@ import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { Card, CardContent, Typography, Button} from "@mui/material";
+import { func } from "prop-types";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
   const user = useSelector((store) => store.user);
   const plan = useSelector((store) => store.getPlanReducer);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch({ type: "GET_PLAN" });
   }, []);
+
+
+  function createPlan() {
+    console.log("create plan clicked");
+    history.push("/plan");
+  }
 
   return (
     <>
@@ -38,7 +46,7 @@ function UserPage() {
           </div>
         ))}
       </CardContent>
-      <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => console.log("Button Clicked")}>Create New Task</Button>
+      <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={createPlan}>Create New Task</Button>
     </>
   );
 }
