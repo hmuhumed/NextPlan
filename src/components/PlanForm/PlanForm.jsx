@@ -23,27 +23,30 @@ function PlanForm() {
       comments: comments,
     };
 
-    // Dispatch an action to create a new task
+    //dispatches the new task to the saga
     dispatch({ type: "CREATE_TASK", payload: newTask });
 
-    // Redirect the user back to the UserPage after creating the task
+    // sends the user back to the UserPage after creating the task
     history.push("/user");
   };
 
   return (
-    <Box display="flex" flexDirection="column" alignItems="center">
+    <Box display="flex" sx={{ m: 5 }} flexDirection="column" alignItems="center">
       <Typography variant="h4">Create New Task</Typography>
       <form onSubmit={handleSubmit}>
         <TextField
           label="Task"
           value={task}
+          margin="normal"
           onChange={handleTaskChange}
           fullWidth
           required
+          autoComplete="off"
         />
         <TextField
           label="Comments"
           value={comments}
+          margin="none"
           onChange={handleCommentsChange}
           fullWidth
           multiline
