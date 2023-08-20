@@ -32,5 +32,8 @@ pool.query(sqlText,[req.user.id])
      })
   });
 
+router.put('/', (req, res) => {
+    const queryText = `UPDATE "plan" SET "isComplete" = true WHERE user_id = $1;`; 
+})
 
 module.exports = router;
