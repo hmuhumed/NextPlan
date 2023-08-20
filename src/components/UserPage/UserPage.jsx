@@ -38,7 +38,7 @@ function UserPage() {
           </div>
         ))}
       </CardContent>
-      <Button style={{boxShadow: "-moz-initial"}} onClick={() => console.log("Button Clicked")}>Create New Task</Button>
+      <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => console.log("Button Clicked")}>Create New Task</Button>
     </>
   );
 }
