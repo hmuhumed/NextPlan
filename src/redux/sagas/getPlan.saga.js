@@ -23,7 +23,8 @@ function* createTask(action) {
 
 function* updateTask(action) {
     try {
-        yield axios.put('/api/plan', action.payload)
+        console.log('in updateTask saga', action.payload)
+        yield axios.put(`/api/plan/${action.payload}`)
         yield put({ type: 'GET_PLAN' })
     }
     catch (error) {
