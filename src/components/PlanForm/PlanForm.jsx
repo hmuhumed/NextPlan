@@ -6,7 +6,10 @@ import { TextField, Button, Typography, Box } from "@mui/material";
 function PlanForm() {
   const [task, setTask] = useState("");
   const [comments, setComments] = useState("");
+  const [location, setLocation] = useState("");
+  const [dateTime, setDateTime] = useState("");
   const dispatch = useDispatch();
+
   const history = useHistory();
 
   const handleTaskChange = (event) => {
@@ -17,14 +20,28 @@ function PlanForm() {
     setComments(event.target.value);
   };
 
+  const handleLocationChange = (event) => {
+    setLocation(event.target.value);
+  };
+
+  const handleDateTimeChange = (event) => {
+    setDateTime(event.target.value);
+  };
+
   const handleSubmit = () => {
     const newTask = {
       task: task,
       comments: comments,
     };
 
+    const newLocation = {
+      location: location,
+      dateTime: dateTime,
+    };
+
     //dispatches the new task to the saga
     dispatch({ type: "CREATE_TASK", payload: newTask });
+    dispatch({ type: "CREATE_LOCATION", payload: newLocation });
 
     // sends the user back to the UserPage after creating the task
     history.push("/user");
@@ -42,6 +59,23 @@ function PlanForm() {
           fullWidth
           required
           autoComplete="off"
+        />
+        <TextField 
+        label="Location"
+        value={location}
+        margin="normal"
+        onChange={handleLocationChange}
+        fullWidth
+        required
+        autoComplete="off"
+        />
+        <TextField 
+        label="Date and Time"
+        value={dateTime}
+        margin="normal"
+        onChange={handleDateTimeChange}
+        fullWidth
+        required
         />
         <TextField
           label="Comments"
