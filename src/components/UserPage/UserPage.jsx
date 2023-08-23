@@ -42,13 +42,16 @@ function UserPage() {
               <CardContent>
                 <Typography>{task.task}</Typography>
                 <Typography>{task.comments}</Typography>
+                <br />
+                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)', marginRight: "10px"}} onClick={() => console.log("Button clicked")}>Completed</Button>
+                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => console.log("Button clicked")}>Delete</Button>
               </CardContent>
             </Card>
             <br />
           </div>
         ))}
       </CardContent>
-      <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={createPlan}>Create New Task</Button>
+      <Button style={{boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)', marginRight: "10px", backgroundColor: "rgb(100, 149, 237)", color: "white"}} onClick={createPlan}>Create New Task</Button>
    </Box>
     </>
   );
