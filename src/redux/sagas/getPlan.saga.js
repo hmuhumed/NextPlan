@@ -10,8 +10,42 @@ function* getPlan() {
     }
 }
 
+function* createTask(action) {
+    try {
+        yield axios.post('/api/plan', action.payload)
+        yield put({ type: 'GET_PLAN' })
+
+    }
+    catch (error) {
+        console.log('Error in createTask saga', error);
+    }
+}
+
+function* updateTask(action) {
+    try {
+        console.log('in updateTask saga', action.payload);
+        yield axios.put(`/api/plan/${action.payload}`);
+        yield put({ type: 'GET_PLAN' });
+    }
+    catch (error) {
+        console.log('Error in updateTask saga', error);
+    }
+}
+
+function* deleteTask(action) {
+    try {
+        yield axios.delete(`/api/plan/${action.payload}`);
+        yield put({ type: 'GET_PLAN' });
+    } catch(error) {
+        console.log("Error in deleteTask saga", error);
+    }
+}
+
 function* getPlanSaga() {
     yield takeLatest('GET_PLAN', getPlan);
+    yield takeLatest('CREATE_TASK', createTask);
+    yield takeLatest('UPDATE_TASK', updateTask);
+    yield takeLatest('DELETE_TASK', deleteTask);
 }
 
 export default getPlanSaga;

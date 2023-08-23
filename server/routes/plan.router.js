@@ -48,6 +48,7 @@ router.get('/', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
+    console.log('in updateTask router', req.params.id);
     // Extracting the parameter from the request to update a specific plan item
     const idToUpdate = req.params.id;
     // Constructing an SQL query to update the "isComplete" field of a plan item
@@ -58,11 +59,26 @@ router.put('/:id', (req, res) => {
     WHERE "plan".id = $1 AND "plan".user_id = $2;`;
     // Executing the SQL query to update the "isComplete" field of a plan item
     // based on the provided item ID.
-    pool.query(queryText, [idToUpdate])
+    pool.query(queryText, [parseInt(req.params.id), req.user.id])
         .then(result => {
             res.sendStatus(201);
         }).catch(err => {
             console.log("Error in PUT /plan.router", err);
+        })
+})
+
+router.delete('/:id', (req, res) => {
+    console.log('in deleteTask router', req.params.id);
+    // Extracting the parameter from the request to delete a specific plan item
+    const idToDelete = req.params.id;
+
+    const queryText = `DELETE FROM "plan" WHERE "plan".id = $1 AND "plan".user_id = $2;`;
+    // Executing the SQL query to delete a plan item based on the provided item ID.
+    pool.query(queryText, [parseInt(req.params.id), req.user.id])
+        .then(result => {
+            res.sendStatus(200);
+        }).catch(err => {
+            console.log("Error in DELETE /plan.router", err);
         })
 })
 
