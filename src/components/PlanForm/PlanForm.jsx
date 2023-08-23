@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { TextField, Button, Typography, Box } from "@mui/material";
+import { TextField, Button, Typography, Box, Input } from "@mui/material";
 
 function PlanForm() {
   const [task, setTask] = useState("");
@@ -60,23 +60,20 @@ function PlanForm() {
           required
           autoComplete="off"
         />
-        <TextField 
-        label="Location"
-        value={location}
-        margin="normal"
-        onChange={handleLocationChange}
-        fullWidth
-        required
-        autoComplete="off"
+        <TextField
+          label="Location"
+          value={location}
+          margin="normal"
+          fullWidth
+          onChange={handleLocationChange}
         />
-        <TextField 
-        label="Date and Time"
-        value={dateTime}
-        margin="normal"
-        onChange={handleDateTimeChange}
-        fullWidth
-        required
-        />
+          <TextField
+            type="datetime-local"
+            value={dateTime}
+            margin="normal"
+            onChange={handleDateTimeChange}
+            fullWidth
+          />
         <TextField
           label="Comments"
           value={comments}
@@ -86,7 +83,7 @@ function PlanForm() {
           multiline
         />
         <Box display="flex" justifyContent="flex-end">
-        <Button type="submit" alignItems="">Create Task</Button>
+          <Button type="submit" alignItems="">Create Task</Button>
         </Box>
       </form>
     </Box>
