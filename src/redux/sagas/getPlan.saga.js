@@ -34,7 +34,7 @@ function* updateTask(action) {
 
 function* deleteTask(action) {
     try {
-        yield axios.delete(`/api/pla/${action.payload}`);
+        yield axios.delete(`/api/plan/${action.payload}`);
         yield put({ type: 'GET_PLAN' });
     } catch(error) {
         console.log("Error in deleteTask saga", error);
