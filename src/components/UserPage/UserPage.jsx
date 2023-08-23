@@ -43,7 +43,7 @@ function UserPage() {
                 <Typography>{task.comments}</Typography>
                 <br />
                 <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)', marginRight: "10px"}} onClick={() => dispatch({type: "UPDATE_TASK", payload: parseInt(task.id)})}>Completed</Button>
-                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => console.log("Button clicked")}>Delete</Button>
+                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => dispatch({type: "DELETE_TASK", payload: task.id})}>Delete</Button>
               </CardContent>
             </Card>
             <br />
