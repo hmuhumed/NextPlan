@@ -11,6 +11,7 @@ function* getPlan() {
 }
 
 function* createTask(action) {
+    console.log('in createTask saga', action.payload);
     try {
         yield axios.post('/api/plan', action.payload)
         yield put({ type: 'GET_PLAN' })
@@ -41,11 +42,22 @@ function* deleteTask(action) {
     }
 }
 
+function* createLocation(action) {
+    try {
+        yield axios.post('/api/plan/location', action.payload)
+        yield put({ type: 'GET_PLAN' })
+    }
+    catch (error) {
+        console.log('Error in createLocation saga', error);
+    };
+};
+
 function* getPlanSaga() {
     yield takeLatest('GET_PLAN', getPlan);
     yield takeLatest('CREATE_TASK', createTask);
     yield takeLatest('UPDATE_TASK', updateTask);
     yield takeLatest('DELETE_TASK', deleteTask);
+    yield takeLatest('CREATE_LOCATION', createLocation);
 }
 
 export default getPlanSaga;

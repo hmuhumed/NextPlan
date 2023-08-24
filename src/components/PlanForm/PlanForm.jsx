@@ -37,16 +37,12 @@ function PlanForm() {
     const newTask = {
       task: task,
       comments: comments,
-    };
-
-    const newLocation = {
       location: location,
       dateTime: dateTime,
     };
 
     //dispatches the new task to the saga
     dispatch({ type: "CREATE_TASK", payload: newTask });
-    dispatch({ type: "CREATE_LOCATION", payload: newLocation });
 
 
     // sends the user back to the UserPage after creating the task

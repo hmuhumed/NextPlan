@@ -3,18 +3,15 @@ const pool = require('../modules/pool');
 const router = express.Router();
 
 router.post('/', (req, res) => {
-
-    // Constructing a SQL query to insert a new plan item into the "plan" table.
-    // The query includes placeholders ($1, $2, $3) for parameterized values to prevent SQL injection.
-    const queryText = `INSERT INTO "plan" ("task", "comments", "user_id") VALUES ($1, $2, $3);`;
-    // Executing an SQL query to insert a new plan item into the "plan" table.
-    // The query includes parameterized values taken from the request body and the authenticated user's ID.
-    pool.query(queryText, [req.body.task, req.body.comments, req.user.id])
-        // If the query is successful, respond with a 201 status code.
+    const queryText = `INSERT INTO "plan" ("task", "location", "date_time","comments","user_id") VALUES 
+    ($1, $2, $3, $4, $5);`;
+   
+    pool.query(queryText, [req.body.task, req.body.location, req.body.dateTime,req.body.comments,req.user.id])
+        
         .then(results => {
             res.sendStatus(201);
         }).catch(err => {
-            // If an error occurs during the query execution, log the error for debugging purposes.
+            
             console.log("Error in POST /plan.router", err);
         })
 })
