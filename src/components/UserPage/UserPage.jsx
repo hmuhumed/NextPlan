@@ -41,6 +41,8 @@ function UserPage() {
               <CardContent>
                 <Typography>{task.task}</Typography>
                 <Typography>{task.comments}</Typography>
+                <Typography>{task.location}</Typography>
+                <Typography> {new Date(task.date_time).toLocaleString()}</Typography>
                 <br />
                 <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)', marginRight: "10px"}} onClick={() => dispatch({type: "UPDATE_TASK", payload: parseInt(task.id)})}>Completed</Button>
                 <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)'}} onClick={() => dispatch({type: "DELETE_TASK", payload: task.id})}>Delete</Button>
