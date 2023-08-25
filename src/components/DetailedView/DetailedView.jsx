@@ -23,7 +23,19 @@ function DetailedView() {
 
     return (
         <>
-        <h2>Hello Bastardsss</h2>
+        <Typography variant="h3" sx={{textAlign: "center"}} >Plan</Typography>
+        <br />
+        <Card>
+            <CardContent>
+                <Typography variant="h5">{plan.task}</Typography>
+                <Typography>{plan.comments}</Typography>
+                <Typography>{plan.location}</Typography>
+                <Typography>{new Date(plan.date_time).toLocaleString()}</Typography>
+                <br />
+                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)', marginRight: "10px" }} onClick={() => dispatch({ type: "UPDATE_TASK", payload: parseInt(plan.id) })}>Completed</Button>
+                <Button style={{ boxShadow: '0px 3px 5px rgba(0, 0, 0, 0.2)' }} onClick={() => dispatch({ type: "DELETE_TASK", payload: plan.id })}>Delete</Button>
+            </CardContent>
+        </Card>
         </>
     )
 }
