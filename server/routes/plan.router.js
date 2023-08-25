@@ -10,6 +10,7 @@ router.post('/', (req, res) => {
     pool.query(queryText, [req.body.task, req.body.location, req.body.dateTime,req.body.comments,req.user.id])
         
         .then(results => {
+            console.log('in post plan', results.rows);
             res.sendStatus(201);
         }).catch(err => {
             
@@ -24,7 +25,8 @@ router.get('/', (req, res) => {
     const sqlText = `
     SELECT *
     FROM "plan"
-    WHERE user_id = $1;
+    WHERE user_id = $1
+    ORDER BY date_time ASC;
     `;
     // Executing an SQL query to retrieve all rows from the "plan" table
     // where the user_id matches the authenticated user's ID.
@@ -53,7 +55,7 @@ router.put('/:id', (req, res) => {
     // where the user_id matches the parameterized value ($1).
     const queryText = `
     UPDATE "plan" 
-    SET "isComplete" = TRUE
+    SET "isComplete" = NOT "isComplete"
     WHERE "plan".id = $1 AND "plan".user_id = $2;`;
     // Executing the SQL query to update the "isComplete" field of a plan item
     // based on the provided item ID.
