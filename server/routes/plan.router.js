@@ -2,6 +2,7 @@ const express = require('express');
 const pool = require('../modules/pool');
 const router = express.Router();
 require('dotenv').config();
+const axios = require('axios');
 
 router.post('/', (req, res) => {
     const queryText = `INSERT INTO "plan" ("task", "location", "date_time","comments","user_id") VALUES 
@@ -18,34 +19,43 @@ router.post('/', (req, res) => {
         })
 })
 
-router.get('/', (req, res) => {
-    console.log('in fetch upcoming plans', req.body);
-    // Constructing an SQL query to retrieve all rows from the "plan" table
-    // where the user_id matches the parameterized value ($1).
-    const sqlText = `
-    SELECT *
-    FROM "plan"
-    WHERE user_id = $1
-    ORDER BY date_time ASC;
-    `;
-    // Executing an SQL query to retrieve all rows from the "plan" table
-    // where the user_id matches the authenticated user's ID.
-    pool.query(sqlText, [req.user.id])
-        // Handling the query result using a Promise chain
-        .then((result) => {
-            // Logging the retrieved rows for debugging and informational purposes
-            console.log('upcoming plans:', result.rows)
-            // Sending the retrieved rows as the response to the client
-            res.send(result.rows)
-        })
-        // If an error occurs during query execution, it is caught here
-        .catch((error) => {
-            // Responding with an error status and message
-            // (You can customize the error message and status as needed)
-            console.log('error fetching plans', error)
-            res.sendStatus(500)
-        })
+router.get('/', async (req, res) => {
+    try {
+        console.log('in fetch upcoming plans', req.body);
+
+        const sqlText = `
+        SELECT *
+        FROM "plan"
+        WHERE user_id = $1
+        ORDER BY 
+            CASE 
+                WHEN "plan"."isComplete" = false THEN 0 
+                ELSE 1
+            END,
+            date_time ASC;
+        `;
+
+        const openWeatherKey = process.env.OPEN_WEATHER_KEY;
+
+        const result = await pool.query(sqlText, [req.user.id]);
+
+        await Promise.all(result.rows.map(async (row) => {
+            try {
+                const response = await axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${row.location}&appid=${openWeatherKey}&units=imperial`);
+                row.weather = response.data;
+            } catch (error) {
+                console.log('error in open weather api', error);
+            }
+        }));
+
+        console.log('upcoming plans:', result.rows);
+        res.send(result.rows);
+    } catch (error) {
+        console.log('error fetching plans', error);
+        res.sendStatus(500);
+    }
 });
+
 
 router.put('/:id', (req, res) => {
     console.log('in updateTask router', req.params.id);
