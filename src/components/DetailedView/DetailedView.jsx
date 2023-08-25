@@ -12,6 +12,13 @@ function DetailedView() {
     const history = useHistory();
     const params = useParams();
 
+    useEffect(() => {
+        dispatch({ type: "GET_PLAN", payload: params.id });
+    }, [params.id]);
+
+    const plan = useSelector((store) => store.getPlanReducer.find((task) => task.id == params.id));
+    console.log("this is the plan reducer on Detailed view", plan);
+
 
 
     return (
