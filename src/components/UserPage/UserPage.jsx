@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Card, CardContent, Typography, Button, Box} from "@mui/material";
-import { func } from "prop-types";
 
 function UserPage() {
   // this component doesn't do much to start, just renders some user reducer info to the DOM
@@ -13,6 +13,7 @@ function UserPage() {
   const plan = useSelector((store) => store.getPlanReducer);
   const dispatch = useDispatch();
   const history = useHistory();
+  const params = useParams();
 
   useEffect(() => {
     dispatch({ type: "GET_PLAN" });
@@ -37,7 +38,7 @@ console.log("this is the plan reducer",plan);
       <CardContent >
         {plan.map((task, i) => (
           <div key={i}>
-            <Card elevation={4} sx={{ display: 'flex',flexDirection: 'row',justifyContent:'space-evenly'}}>
+            <Card elevation={4} sx={{ display: 'flex',flexDirection: 'row',justifyContent:'space-evenly'}} onClick={() => history.push(`/${task.id}`)}>
               <CardContent>
                 <Typography variant="h5"></Typography>
                 <Typography>{task.task}</Typography>
